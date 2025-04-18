@@ -1,135 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="darkorchid" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="darkorchid" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <title>MikaSukie's Page</title>
-    <style>
-        * {
-        html, body {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-	    color: darkorchid;
-        }
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        body {
-            background: linear-gradient(135deg, #05000d, #0d0015);
-            background-attachment: fixed;
-            background-size: cover;
-            color: darkorchid;
-            text-align: center;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            max-width: 800px;
-            padding: 50px 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 1.5s forwards;
-        }
-        h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #ff00ff;
-            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff1493;
-            animation: glowPulse 2s infinite alternate;
-            transition: transform 0.3s ease;
-            display: inline-block;
-        }
-        h1:hover {
-            transform: scale(1.05);
-        }
-        .github-logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin: 20px 0;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-            cursor: pointer;
-        }
-        .github-logo:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
-        }
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        .button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 30px;
-            background: linear-gradient(45deg, #ff00ff, #ff1493);
-            color: white;
-            cursor: pointer;
-            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-        }
-        .button:hover {
-            box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
-        }
-        .credits {
-            margin-top: 50px;
-            font-size: 1rem;
-            color: #bbbbbb;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-        }
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes glowPulse {
-            0% {
-                text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff1493, 0 0 20px #ff1493;
-            }
-            100% {
-                text-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff1493;
-            }
-        }
-    </style>
+  <title>MikaSukie's Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #05000d, #0d0015);
+      background-attachment: fixed;
+      background-size: cover;
+      color: darkorchid;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      padding: 40px 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1.5s forwards;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #ff00ff;
+      text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff1493;
+      animation: glowPulse 2s infinite alternate;
+      transition: transform 0.3s ease;
+      display: inline-block;
+      word-wrap: break-word;
+    }
+
+    h1:hover {
+      transform: scale(1.05);
+    }
+
+    .github-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin: 20px 0;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+      cursor: pointer;
+    }
+
+    .github-logo:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin: 15px 0;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .button {
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(45deg, #ff00ff, #ff1493);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+      flex-shrink: 0;
+    }
+
+    .button:hover {
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
+    }
+
+    .credits {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #bbbbbb;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes glowPulse {
+      0% {
+        text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff1493, 0 0 20px #ff1493;
+      }
+      100% {
+        text-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff1493;
+      }
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+        padding: 0 10px;
+      }
+
+      .button {
+        width: 100%;
+        max-width: 300px;
+        font-size: 1rem;
+      }
+
+      .container {
+        padding: 20px 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>MikaSukie's Page</h1>
-        <img src="https://avatars.githubusercontent.com/u/75727770?v=4" alt="GitHub Profile Picture" class="github-logo" onclick="window.location.href='https://github.com/MikaSukie'">
-        <p>Welcome! Check out my projects below.</p>
-        <p>I code in Java, Python (my favorite is Python!)</p>
-        <div class="buttons">
-            <button class="button" onclick="window.location.href='https://mikasukie.github.io/PyPP-Interpreter/'">PyPP Interpreter</button>
-	    <button class="button" onclick="window.location.href='https://mikasukie.github.io/Cute-Planner/'">Cute Planner</button>
-	    <button class="button" onclick="window.location.href='https://mikasukie.github.io/Cute-Planner-Mobile/'">Cute Planner Mobile</button>
-            <button class="button" onclick="window.location.href='https://mikasukie.github.io/CUNE-VN-Engine/'">Cune VN Engine</button>
-            <button class="button" onclick="window.location.href='https://mikasukie.github.io/CuteTextEditor/'">Cute Text Editor</button>
-	    <button class="button" onclick="window.location.href='https://mikasukie.github.io/Beautiful-Citations/'">Beautiful Citations</button>
-        </div>
-
-        <p class="credits">By MikaSukie or Lorielle</p>
+  <div class="container">
+    <h1>MikaSukie's Page</h1>
+    <img src="https://avatars.githubusercontent.com/u/75727770?v=4" alt="GitHub Profile Picture" class="github-logo" onclick="window.location.href='https://github.com/MikaSukie'">
+    <p>Welcome! Check out my projects below.</p>
+    <p>I code in Java, Python (my favorite is Python!)</p>
+    <div class="buttons">
+      <button class="button" onclick="window.location.href='https://mikasukie.github.io/PyPP-Interpreter/'">PyPP Interpreter</button>
+      <button class="button" onclick="window.location.href='https://mikasukie.github.io/Cute-Planner/'">Cute Planner</button>
+      <button class="button" onclick="window.location.href='https://mikasukie.github.io/Cute-Planner-Mobile/'">Cute Planner Mobile</button>
+      <button class="button" onclick="window.location.href='https://mikasukie.github.io/CUNE-VN-Engine/'">Cune VN Engine</button>
+      <button class="button" onclick="window.location.href='https://mikasukie.github.io/CuteTextEditor/'">Cute Text Editor</button>
+      <button class="button" onclick="window.location.href='https://mikasukie.github.io/Beautiful-Citations/'">Beautiful Citations</button>
     </div>
+    <p class="credits">By MikaSukie or Lorielle</p>
+  </div>
 </body>
 </html>
