@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="pink" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>MikaLorielle Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: radial-gradient(ellipse at top left, #41083c, #5a1052, #581e58);
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 30%, rgba(255, 0, 255, 0.1), transparent 40%),
+                  radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.05), transparent 30%);
+      animation: pulseBackground 20s infinite alternate;
+      z-index: 0;
+    }
+
+    .glass {
+      position: relative;
+      backdrop-filter: blur(20px);
+      background-color: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      border-radius: 1rem;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      z-index: 1;
+    }
+
+    .glass:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 16px 50px rgba(255, 0, 255, 0.3);
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .glow-title {
+      font-size: 3.5rem;
+      font-weight: bold;
+      color: transparent;
+      animation: glowPulse 2s infinite alternate;
+      transition: transform 0.3s ease;
+      text-shadow: 0 0 10px #ff00ff63, 0 0 20px #ff00ff71, 0 0 40px #ff149160;
+      background: linear-gradient(90deg, #ff00ff, #ff1493, #00ffff);
+      background-size: 200% auto;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: textGradient 4s ease infinite alternate;
+      display: inline-block;
+    }
+    @keyframes glowPulse {
+      0% {
+        text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff1493, 0 0 20px #ff1493;
+      }
+      100% {
+        text-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff1493;
+      }
+    }
+    .glow-title:hover {
+      transform: scale(1.05);
+    }
+    @keyframes textGradient {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      background: linear-gradient(to right, #ff66cc, #66ccff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .button {
+      padding: 3px 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(45deg, #ff00ff, #ff1493);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+      flex-shrink: 0;
+    }
+
+    .button:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
+    }
+
+  </style>
+</head>
+<script>
+const phrases = [
+  "Creative Developer",
+  "Toolmaker",
+  "Tinkerer",
+  "Music Producer"
+];
+let index = 0, char = 0, forward = true;
+
+function type() {
+  const el = document.getElementById("typed-text");
+  if (!el) return;
+
+  if (forward) {
+    if (char < phrases[index].length) {
+      el.textContent += phrases[index][char++];
+    } else {
+      forward = false;
+      setTimeout(type, 1000);
+      return;
+    }
+  } else {
+    if (char > 0) {
+      el.textContent = el.textContent.slice(0, --char);
+    } else {
+      forward = true;
+      index = (index + 1) % phrases.length;
+    }
+  }
+  setTimeout(type, forward ? 70 : 30);
+}
+document.addEventListener("DOMContentLoaded", type);
+</script>
+<canvas id="particles" class="fixed inset-0 z-0 pointer-events-none"></canvas>
+<script>
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+let particles = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+function initParticles(count = 120) {
+  particles = Array.from({ length: count }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + 0.5,
+    speed: Math.random() * 0.4 + 0.1,
+    angle: Math.random() * Math.PI * 2
+  }));
+}
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "rgba(255, 255, 255, 0.07)";
+  for (let p of particles) {
+    p.x += Math.cos(p.angle) * p.speed;
+    p.y += Math.sin(p.angle) * p.speed;
+    if (p.x > canvas.width || p.x < 0 || p.y > canvas.height || p.y < 0) {
+      p.x = Math.random() * canvas.width;
+      p.y = 0;
+    }
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  requestAnimationFrame(drawParticles);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initParticles();
+  drawParticles();
+});
+</script>
+
+<body class="text-white px-6 py-10 relative z-10">
+
+  <header class="text-center mb-14">
+    <div class="fade-in">
+      <span class="text-4xl">┍━━━━━»•» 🌺 «•«━┑</span><br/>
+      <h1 class="glow-title mt-2">MikaLorielle</h1><br/>
+      <span class="text-4xl">┕━»•» 🌺 «•«━━━━━┙</span><br/>
+      <span class="text-2xl">[🎵 1:35 ─ㅇ─── 3:47]</span><br/>
+    </div>
+  <p class="mt-4 text-lg text-slate-300 fade-in"><span id="typed-text"></span><span class="border-r-2 border-pink-400 ml-1 animate-pulse"></span></p>
+  </header>
+
+  <main class="max-w-5xl mx-auto grid gap-10">
+    <section class="glass p-6 fade-in">
+      <h2 class="section-title mb-3">Bio</h2>
+      <p class="text-slate-300 leading-relaxed space-y-1">
+        <strong>Pronouns:</strong> <span class="text-orange-500">He/Him</span><br/>
+        <strong>Languages I know:</strong> <span class="text-yellow-300">Age: 15 (Almost 16)</span><br/>
+        <strong>Languages I know:</strong> <span class="text-cyan-300">Python, Java</span><br/>
+        <strong>Languages I Speak:</strong> <span class="text-teal-300">Korean, English</span><br/>
+        <strong>Current Occupation:</strong> <span class="text-pink-500">Content creator, HighSchooler, and Developer</span><br/>
+        <strong>Learning:</strong> <span class="text-blue-300">C#, JavaScript, HTML, CSS, Rust</span> <span class="text-sm">(maybe C++)</span><br/>
+        <strong>Music Producer:</strong> Experienced with <span class="text-pink-300">FL Studio, GarageBand, LMMS</span><br/>
+        <strong>Linux Tinkerer:</strong> I use <span class="text-purple-300">Hyprland + Arch Linux</span><br/>
+        <strong>Favorite Language:</strong> <span class="text-red-400">Still choosing!</span><br/>
+        <strong>Hobbies:</strong> <span class="text-sky-400">Tinkering with Operating Systems (escpecially linux)! Another is making music</span><br/>
+        <strong>Trying out:</strong> <span class="text-orange-400">Art-(Digital and Paper), web development (front and back)</span><br/>
+    </p>
+    </section>
+
+    <section class="glass p-6 fade-in">
+      <h2 class="section-title mb-3">Future/Current Goals + Bucket List</h2>
+      <p class="text-slate-300 leading-relaxed space-y-1">
+        <strong>:</strong> <span class="text-orange-400">Graduating HighSchool <- (primary goal)</span><br/>
+        <strong>:</strong> <span class="text-yellow-300">Becoming a content creator (YouTube) <- Secondary goal</span><br/>
+        <strong>:</strong> <span class="text-purple-300">Make a Hit song <- (depends: goal two)</span><br/>
+        <strong>:</strong> <span class="text-red-400">Make a hit Game <- (depends: goal two & goal seven)</span><br/>
+        <strong>:</strong> <span class="text-cyan-300">Making a compiled language using LLVM <- (depends: goal seven)</span><br/>
+        <strong>:</strong> <span class="text-teal-300">Making an Operating System <- (depends: goal five)</span><br/>
+        <strong>:</strong> <span class="text-blue-300">Properly learn relevant languages</span>
+        <strong>:</strong> <span class="text-pink-300">Properly getting into AI (LLMS)</span><br/>
+        <strong>:</strong> <span class="text-sky-400">Making a invention to make the world better (Even a little bit) <- (the final goal)</span><br/>
+    </p>
+    </section>
+
+        <section class="glass p-6 fade-in">
+      <h2 class="section-title mb-3">Accomplishments</h2>
+      <p class="text-slate-300 leading-relaxed space-y-1">
+        <strong>:</strong> <span class="text-purple-300">Managed to push most projects out with minimal bugs.</span><br/>
+        <strong>:</strong> <span class="text-red-400">Reached 200 commits (2025) + first two stars on a repository</span><br/>
+        <strong>:</strong> <span class="text-cyan-300">Discord developer badge (for the second time)</span><br/>
+        <strong>:</strong> <span class="text-pink-300">reached 130 subscribers on YouTube (not main channel)</span><br/>
+        <strong>:</strong> <span class="text-blue-300">Graduated middle school with high grades (mainly A(s) and B(s)</span><br/>
+        <strong>:</strong> <span class="text-green-300">Presidential award in Elementary school</span><br/>
+        <strong>:</strong> <span class="text-yellow-300">Principles award in Middle School (3.8 GPA or above)</span><br/>
+        <strong>:</strong> <span class="text-orange-300">More Coming!</span><br/>
+
+    </p>
+    </section>
+
+    <section class="glass p-6 fade-in">
+      <h2 class="section-title mb-4">Projects</h2>
+      <ul class="space-y-2 list-disc list-inside text-slate-300">
+        <li><strong>PyPP</strong>: Python interpreter with braces.</li>
+        <button class="button" onclick="window.location.href='https://mikasukie.github.io/PyPP-Interpreter/'">PyPP Interpreter</button>
+        <li><strong>CutePlanner</strong>: Visual planning tool + mobile version.</li>
+        <button class="button" onclick="window.location.href='https://mikasukie.github.io/Cute-Planner/'">Cute Planner</button>
+        <li><strong>CUNE VN Engine</strong>: Python-based visual novel engine.</li>
+        <button class="button" onclick="window.location.href='https://mikasukie.github.io/CUNE-VN-Engine/'">Cune VN Engine</button>
+        <li><strong>"cute" Text Editor</strong>: bareminimal text editor that does not sacrifice on its looks.</li>
+        <button class="button" onclick="window.location.href='https://mikasukie.github.io/CuteTextEditor/'">Cute Text Editor</button>
+        <li><strong>TLITE IDE</strong>: Linting, suggestions, typing macros.</li>
+        <button class="button" onclick="window.location.href='https://mikasukie.github.io/TLITE/'">TLITE (IDE)</button>
+        <li><strong>Citation Generator</strong>: Quick citation tool in Python.</li>
+        <button class="button" onclick="window.location.href='https://mikasukie.github.io/Beautiful-Citations/'">Beautiful Citations</button>
+        <li><strong>Black Hole Simulator</strong>: Visually captivating simulation.</li>
+        <button class="button" onclick="window.location.href='https://mikasukie.github.io/Blackhole/'">Blackhole Sim</button>
+        <li><strong>Vectimate Studio</strong>: Streaming layout engine for OBS.<br/>
+          ↳ Chat support, direct reply, plugins, CSS customizations (using the CSS mod), and mod support.</li>
+          <button class="button" onclick="window.location.href='https://vectimatestudio.github.io/'">Vectimate Studio</button>
+        <li><strong>More coming soon!</strong>: (SumThis.org) <-[in progress...]</li>
+        </ul>
+    </section>
+
+    <section class="glass p-6 fade-in">
+    <h2 class="section-title mb-4">Skills</h2>
+    <div class="flex flex-wrap gap-4 text-sm text-slate-200">
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/python/3776AB" class="h-4" /> Python
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://img.icons8.com/?size=100&id=13679&format=png&color=000000" class="h-4" /> Java
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/lmms/10B146" class="h-4" /> LMMS
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/apple/999999" class="h-4" /> GarageBand
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/archlinux/1793D1" class="h-4" /> Linux
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/youtube/FF0000" class="h-4" /> YT
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/twitch/9146FF" class="h-4" /> Twitch
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/jetbrains/FFFFFF" class="h-4" /> JB-IDEs
+        </div>
+            <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/davinciresolve/233A51" class="h-4" /> D-Resolve
+        </div>
+    </div>
+    </section>
+
+    <section class="glass p-6 fade-in">
+    <h2 class="section-title mb-4">Preferred OS Pkgs</h2>
+    <div class="flex flex-wrap gap-4 text-sm text-slate-200">
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/hyprland/58E1FF" class="h-4" /> Hyprland
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/wayland/FFBC00" class="h-4" /> Wayland
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/kdeplasma/1D99F3" class="h-4" /> KDE
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/blender/E87D0D" class="h-4" /> Blender
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/obsstudio/FFFFFF" class="h-4" /> OBS
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/intellijidea/FFFFFF" class="h-4" /> IntelliJ
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/pycharm/FFFFFF" class="h-4" /> PYcharm
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/davinciresolve/233A51" class="h-4" /> D-Resolve
+        </div>
+            <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+        <img src="https://cdn.simpleicons.org/krita/3BABFF" class="h-4" /> Krita
+        </div>
+    </div>
+    </section>
+
+    <section class="grid md:grid-cols-2 gap-6 fade-in">
+    <div class="glass p-6">
+        <h3 class="section-title mb-2 flex items-center gap-2">
+        <img src="https://cdn.simpleicons.org/gmail/EA4335" class="h-5 w-5" alt="Gmail" />
+        Gmail
+        </h3>
+        <p class="text-slate-300">mikalorielle@gmail.com</p>
+    </div>
+    <div class="glass p-6">
+        <h3 class="section-title mb-2 flex items-center gap-2">
+        <img src="https://cdn.simpleicons.org/discord/5865F2" class="h-5 w-5" alt="Discord" />
+        Discord
+        </h3>
+        <p class="text-slate-300">mikasukie</p>
+    </div>
+    </section>
+
+
+    <section class="glass p-6 fade-in mb-10">
+    <h2 class="section-title mb-4">Socials</h2>
+    <ul class="space-y-2 text-slate-300">
+        <li class="flex items-center gap-2">
+        <img src="https://cdn.simpleicons.org/twitch/9146FF" class="h-5 w-5" alt="Twitch" />
+        <a href="https://www.twitch.tv/mikalorielle" target="_blank" class="hover:text-teal-400 transition-colors">
+            Twitch: twitch.tv/mikalorielle
+        </a>
+        </li>
+        <li class="flex items-center gap-2">
+        <img src="https://cdn.simpleicons.org/youtube/FF0000" class="h-5 w-5" alt="YouTube" />
+        <a href="https://www.youtube.com/@MikaLorielle" target="_blank" class="hover:text-teal-400 transition-colors">
+            YouTube: youtube.com/@MikaLorielle
+        </a>
+        </li>
+    </ul>
+    </section>
+
+  </main>
+
+    <footer class="text-center text-slate-400 mt-20 mb-4 fade-in">
+    © 2025 MikaLorielle (Jayden F). All rights reserved.
+    </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const elements = document.querySelectorAll(".fade-in");
+      elements.forEach((el, i) => {
+        el.style.animationDelay = `${0.2 + i * 0.2}s`;
+      });
+    });
+  </script>
+</body>
+</html>
